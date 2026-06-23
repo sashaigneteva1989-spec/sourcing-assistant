@@ -1,0 +1,93 @@
+/* Общий фон */
+.stApp {
+    background: #F3F6FB;
+}
+
+/* Контейнер */
+.block-container{
+    max-width:1150px;
+    padding-top:2rem;
+    padding-bottom:3rem;
+}
+
+/* Верхний баннер */
+.hero{
+    background: linear-gradient(135deg,#2563EB,#1E40AF);
+    border-radius:18px;
+    padding:30px;
+    color:white;
+    margin-bottom:28px;
+    box-shadow:0 12px 35px rgba(37,99,235,.25);
+}
+
+.hero h1{
+    color:white;
+    margin:0;
+    font-size:38px;
+    font-weight:700;
+}
+
+.hero p{
+    margin-top:8px;
+    font-size:18px;
+    opacity:.92;
+}
+
+/* Кнопка */
+.stButton>button{
+    width:100%;
+    height:56px;
+    border-radius:12px;
+    border:none;
+    background:#2563EB;
+    color:white;
+    font-size:18px;
+    font-weight:600;
+    transition:.2s;
+}
+
+.stButton>button:hover{
+    background:#1D4ED8;
+    transform:translateY(-2px);
+}
+
+/* Поле ввода */
+textarea{
+    border-radius:12px !important;
+}
+
+/* Карточки результатов */
+.result-card{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    border:1px solid #E5E7EB;
+    box-shadow:0 10px 30px rgba(15,23,42,.05);
+    margin-bottom:20px;
+}
+
+/* Заголовок карточки */
+.result-title{
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:14px;
+    color:#111827;
+}
+
+/* Код */
+pre{
+    border-radius:12px !important;
+}
+
+/* Разделитель */
+hr{
+    margin-top:35px;
+    margin-bottom:35px;
+}.result-box {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 22px;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+}
