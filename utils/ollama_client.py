@@ -26,4 +26,5 @@ def analyze_vacancy(text):
             "num_predict": 600
         }
     )
+
     return response["message"]["content"]
