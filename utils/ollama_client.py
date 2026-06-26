@@ -1,6 +1,12 @@
-import ollama
+from openai import OpenAI
 
-MODEL = "qwen2.5:7b"
+from config import MODEL, GEMINI_API_KEY
+
+
+client = OpenAI(
+    api_key=GEMINI_API_KEY,
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+)
 
 
 def load_prompt():
@@ -8,9 +14,9 @@ def load_prompt():
         return f.read()
 
 
-def analyze_vacancy(text):
-    response = ollama.chat(
-        model=MODEL,
+def analyze_vacancy(text, model=MODEL):
+    response = client.chat.completions.create(
+        model=model,
         messages=[
             {
                 "role": "system",
@@ -21,10 +27,7 @@ def analyze_vacancy(text):
                 "content": text
             }
         ],
-        options={
-            "temperature": 0.2,
-            "num_predict": 600
-        }
+        temperature=0.2
     )
 
-    return response["message"]["content"]
+    return response.choices[0].message.content

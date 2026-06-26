@@ -1,7 +1,5 @@
-import re
+# utils/postprocess.py
 
-
-# Эти слова никогда не должны попадать в поиск
 BANNED_WORDS = {
     "bitrix24",
     "bitrixgpt",
@@ -11,8 +9,6 @@ BANNED_WORDS = {
     "wildberries"
 }
 
-
-# Эти фразы убираем из начала поисковых терминов
 PREFIXES = [
     "опыт с ",
     "опыт работы с ",
@@ -27,7 +23,7 @@ PREFIXES = [
 
 
 def clean_term(term: str) -> str:
-    """Очищает один поисковый термин"""
+    """Очищает один поисковый термин."""
 
     term = term.strip()
 
@@ -35,18 +31,19 @@ def clean_term(term: str) -> str:
         if term.lower().startswith(prefix):
             term = term[len(prefix):]
 
-    term = term.strip()
-
-    return term
+    return term.strip()
 
 
 def clean_list(items):
-    """Очищает список поисковых терминов"""
+    """Очищает список терминов, удаляет повторы и запрещённые слова."""
 
     result = []
     used = set()
 
     for item in items:
+
+        if not isinstance(item, str):
+            continue
 
         item = clean_term(item)
 
@@ -60,18 +57,33 @@ def clean_list(items):
             continue
 
         used.add(item.lower())
-
         result.append(item)
 
     return result
 
 
+def build_boolean(must_have):
+    """Строит Boolean только из обязательных технологий."""
+
+    if not must_have:
+        return ""
+
+    return " AND ".join(f"({term})" for term in must_have)
+
+
 def postprocess(data):
 
-    data["must_have"] = clean_list(data.get("must_have", []))
+    must_have = clean_list(data.get("must_have", []))
+    any_words = clean_list(data.get("any_words", []))
 
-    data["any_words"] = clean_list(data.get("any_words", []))
+    # удаляем из any_words всё, что уже есть в must_have
+    must_have_lower = {x.lower() for x in must_have}
+    any_words = [x for x in any_words if x.lower() not in must_have_lower]
 
-    data["exclude"] = clean_list(data.get("exclude", []))
+    data["must_have"] = must_have
+    data["any_words"] = any_words
+
+    # Boolean всегда строится автоматически
+    data["boolean"] = build_boolean(must_have)
 
     return data
